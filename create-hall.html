@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Event Halls - Eventify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Main container for the two-column layout -->
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Manage Your Event Halls</h1>
+            <a href="dashboard.html" class="btn btn-secondary">← Back to Dashboard</a>
+        </div>
+
+        <div class="two-column-layout">
+            <!-- Left Column: Form for Creating/Editing Halls -->
+            <div class="left-column">
+                <div class="form-wrapper">
+                    <h2 id="formTitle">Create a New Hall</h2>
+                    <form id="hallForm">
+                        <div class="form-group">
+                            <label for="hallName">Hall Name:</label>
+                            <input type="text" id="hallName" name="hallName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" id="location" name="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pricing">Pricing (FCFA per day):</label>
+                            <input type="number" id="pricing" name="pricing" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="capacity">Hall Capacity (People):</label>
+                            <input type="number" id="capacity" name="capacity" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tables">Number of Tables:</label>
+                            <input type="number" id="tables" name="tables" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact Info:</label>
+                            <input type="text" id="contact" name="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" rows="4"
+                                placeholder="e.g., Air conditioned, projector available..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Create Hall</button>
+                            <button type="button" onclick="resetForm()" class="btn btn-secondary">Clear / Cancel
+                                Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: List of User's Halls -->
+            <div class="right-column">
+                <div class="list-wrapper">
+                    <h2>My Event Halls</h2>
+                    <div id="userHallsList" class="halls-list-column">
+                        <!-- Halls will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State variables to manage editing
+        let isEditing = false;
+        let editingHallIndex = null; // This will store the index of the hall in the main array
+
+        // This function runs when the page loads
+        window.onload = function () {
+            // First, check if a user is logged in. If not, redirect to the login page.
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                alert('You must be logged in to manage halls.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load and display the halls created by the current user in the right column
+            loadUserHalls();
+        };
+
+        // Function to load and display halls for the logged-in user
+        function loadUserHalls() {
+            const currentUser = localStorage.getItem('currentUser');
+            const allHalls = JSON.parse(localStorage.getItem('eventHalls') || '[]');
+            const userHallsList = document.getElementById('userHallsList');
+
+            // Filter the halls to get only those created by the current user
+            const userHalls = allHalls.map((hall, index) => ({ ...hall, originalIndex: index })) // Keep track of original index
+                .filter(hall => hall.createdBy === currentUser);
+
+            // If the user has no halls, display a message
+            if (userHalls.length === 0) {
+                userHallsList.innerHTML = '<p class="no-halls">You have not created any halls yet. Use the form on the left to add your first one!</p>';
+                return;
+            }
+
+            // If there are halls, create the HTML for the list
+            userHallsList.innerHTML = userHalls.map(hall => `
+                <div class="hall-item">
+                    <div class="hall-info">
+                        <h4>${hall.name}</h4>
+                        <span class="status ${hall.status.toLowerCase()}">${hall.status}</span>
+                    </div>
+                    <div class="hall-actions">
+                        <button onclick="prepareToEditHall(${hall.originalIndex})" class="btn-icon" title="Edit">✏️</button>
+                        <button onclick="deleteHall(${hall.originalIndex})" class="btn-icon" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to handle the form submission (for both creating and updating)
+        document.getElementById('hallForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the form from reloading the page
+
+            // Get all values from the form fields
+            const hallData = {
+                name: document.getElementById('hallName').value.trim(),
+                location: document.getElementById('location').value.trim(),
+                pricing: parseInt(document.getElementById('pricing').value),
+                capacity: parseInt(document.getElementById('capacity').value),
+                tables: parseInt(document.getElementById('tables').value),
+                contact: document.getElementById('contact').value.trim(),
+                description: document.getElementById('description').value.trim(),
+                createdBy: localStorage.getItem('currentUser')
+            };
+
+            // Get the full list of halls from Local Storage
+            const allHalls = JSON.parse(localStorage.getItem('eventHalls') || '[]');
+
+            if (isEditing) {
+                // --- UPDATE EXISTING HALL ---
+                const originalHall = allHalls[editingHallIndex];
+                // Combine old data (like status) with new form data
+                const updatedHall = { ...originalHall, ...hallData, updatedAt: new Date().toISOString() };
+                allHalls[editingHallIndex] = updatedHall;
+                alert('Hall updated successfully!');
+            } else {
+                // --- CREATE NEW HALL ---
+                // Check if a hall with the same name already exists for this user
+                const existingHall = allHalls.find(h => h.name.toLowerCase() === hallData.name.toLowerCase() && h.createdBy === hallData.createdBy);
+                if (existingHall) {
+                    alert('A hall with this name already exists. Please choose a different name.');
+                    return;
+                }
+                // Add default status and creation date
+                const newHall = { ...hallData, status: "Available", createdAt: new Date().toISOString() };
+                allHalls.push(newHall);
+                alert('Hall created successfully!');
+            }
+
+            // Save the updated array back to Local Storage
+            localStorage.setItem('eventHalls', JSON.stringify(allHalls));
+
+            // Reset the form and update the list on the right
+            resetForm();
+            loadUserHalls();
+        });
+
+        // Function to prepare the form for editing a hall
+        function prepareToEditHall(originalIndex) {
+            const allHalls = JSON.parse(localStorage.getItem('eventHalls') || '[]');
+            const hallToEdit = allHalls[originalIndex];
+
+            // Set the state to "editing"
+            isEditing = true;
+            editingHallIndex = originalIndex;
+
+            // Fill the form with the hall's data
+            document.getElementById('hallName').value = hallToEdit.name;
+            document.getElementById('location').value = hallToEdit.location;
+            document.getElementById('pricing').value = hallToEdit.pricing;
+            document.getElementById('capacity').value = hallToEdit.capacity;
+            document.getElementById('tables').value = hallToEdit.tables;
+            document.getElementById('contact').value = hallToEdit.contact;
+            document.getElementById('description').value = hallToEdit.description || '';
+
+            // Update UI to reflect editing mode
+            document.getElementById('formTitle').textContent = 'Edit Event Hall';
+            document.getElementById('submitBtn').textContent = 'Update Hall';
+
+            // Scroll to the top to make the form visible
+            window.scrollTo(0, 0);
+        }
+
+        // Function to delete a hall
+        function deleteHall(originalIndex) {
+            if (confirm('Are you sure you want to delete this hall? This action cannot be undone.')) {
+                const allHalls = JSON.parse(localStorage.getItem('eventHalls') || '[]');
+
+                // Remove the hall from the array
+                allHalls.splice(originalIndex, 1);
+
+                // Save the modified array back to Local Storage
+                localStorage.setItem('eventHalls', JSON.stringify(allHalls));
+
+                // If the deleted hall was the one being edited, reset the form
+                if (isEditing && editingHallIndex === originalIndex) {
+                    resetForm();
+                }
+
+                // Refresh the list
+                loadUserHalls();
+                alert('Hall deleted successfully.');
+            }
+        }
+
+        // Function to clear the form and reset the editing state
+        function resetForm() {
+            document.getElementById('hallForm').reset(); // Clears all form inputs
+            isEditing = false;
+            editingHallIndex = null;
+
+            // Reset UI back to "Create" mode
+            document.getElementById('formTitle').textContent = 'Create a New Hall';
+            document.getElementById('submitBtn').textContent = 'Create Hall';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Eventify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-form">
+            <h2>Create Your Account</h2>
+            
+            <!-- Registration form -->
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                
+                <!-- Error message display area -->
+                <div id="errorMessage" class="error-message"></div>
+                
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            
+            <p class="auth-link">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Registration form handling
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form from submitting normally
+            
+            // Get form values
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Clear previous error messages
+            errorDiv.textContent = '';
+            
+            // Validate that passwords match
+            if (password !== confirmPassword) {
+                errorDiv.textContent = 'Passwords do not match!';
+                return;
+            }
+            
+            // Check if username already exists
+            const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+            if (existingUsers.find(user => user.username === username)) {
+                errorDiv.textContent = 'Username already exists!';
+                return;
+            }
+            
+            // Create new user object
+            const newUser = {
+                username: username,
+                password: password, // In a real app, this would be hashed
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add user to existing users array
+            existingUsers.push(newUser);
+            
+            // Save updated users array to localStorage
+            localStorage.setItem('users', JSON.stringify(existingUsers));
+            
+            // Show success message and redirect
+            alert('Registration successful! Redirecting to login page...');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

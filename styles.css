@@ -1,0 +1,1277 @@
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    font-family: 'Arial', sans-serif;
+
+    line-height: 1.6;
+
+    background-color: #f4f4f4;
+
+    color: #333;
+
+}
+
+
+/* Home Page Styles */
+
+.home-container {
+
+    height: 100vh;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+
+        url('https://placehold.co/1920x1080?text=Event+Hall+Background');
+
+    background-size: cover;
+
+    background-position: center;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.welcome-overlay {
+
+    text-align: center;
+
+    color: white;
+
+    padding: 2rem;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 15px;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+}
+
+
+.welcome-title {
+
+    font-size: 3.5rem;
+
+    font-weight: bold;
+
+    margin-bottom: 1rem;
+
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
+}
+
+
+.welcome-subtitle {
+
+    font-size: 1.3rem;
+
+    margin-bottom: 3rem;
+
+    opacity: 0.9;
+
+}
+
+
+.button-container {
+
+    display: flex;
+
+    gap: 2rem;
+
+    justify-content: center;
+
+}
+
+
+/* Button Styles */
+
+.btn {
+
+    padding: 12px 30px;
+
+    text-decoration: none;
+
+    border: none;
+
+    border-radius: 25px;
+
+    font-size: 1.1rem;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    display: inline-block;
+
+    text-align: center;
+
+}
+
+
+.btn-primary {
+
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+
+    color: white;
+
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+
+}
+
+
+.btn-primary:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+
+}
+
+
+.btn-secondary {
+
+    background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+
+    color: white;
+
+    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+
+}
+
+
+.btn-secondary:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 20px rgba(240, 147, 251, 0.6);
+
+}
+
+
+/* Auth Pages (Login/Register) */
+
+.auth-container {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    padding: 20px;
+
+}
+
+
+.auth-form {
+
+    background: white;
+
+    padding: 3rem;
+
+    border-radius: 20px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+
+    max-width: 450px;
+
+}
+
+
+.auth-form h2 {
+
+    text-align: center;
+
+    margin-bottom: 2rem;
+
+    color: #333;
+
+    font-size: 2rem;
+
+}
+
+
+.form-group {
+
+    margin-bottom: 1.5rem;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    font-weight: bold;
+
+    color: #555;
+
+}
+
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 2px solid #ddd;
+
+    border-radius: 10px;
+
+    font-size: 1rem;
+
+    transition: border-color 0.3s ease;
+
+}
+
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus {
+
+    outline: none;
+
+    border-color: #667eea;
+
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.1);
+
+}
+
+
+.error-message {
+
+    color: #ff4757;
+
+    margin: 1rem 0;
+
+    font-weight: bold;
+
+    text-align: center;
+
+}
+
+
+.warning-message {
+
+    color: #ff6b6b;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    margin: 1rem 0;
+
+}
+
+
+.auth-link {
+
+    text-align: center;
+
+    margin-top: 1.5rem;
+
+}
+
+
+.auth-link a {
+
+    color: #667eea;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+}
+
+
+.auth-link a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* Dashboard Styles */
+
+.dashboard-container {
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 2rem;
+
+}
+
+
+.dashboard-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 3rem;
+
+    background: white;
+
+    padding: 2rem;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+}
+
+
+.dashboard-header h1 {
+
+    color: #333;
+
+    font-size: 2rem;
+
+}
+
+
+/* Action Cards */
+
+.action-cards {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    gap: 2rem;
+
+    margin-bottom: 3rem;
+
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 3rem 2rem;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    border: 2px solid transparent;
+
+}
+
+
+.card:hover {
+
+    transform: translateY(-10px);
+
+    border-color: #667eea;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.card-icon {
+
+    font-size: 4rem;
+
+    margin-bottom: 1rem;
+
+}
+
+
+.card h3 {
+
+    font-size: 1.5rem;
+
+    margin-bottom: 1rem;
+
+    color: #333;
+
+}
+
+
+.card p {
+
+    color: #666;
+
+    font-size: 1.1rem;
+
+}
+
+
+/* Halls Section */
+
+.halls-section {
+
+    background: white;
+
+    padding: 2rem;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    margin-bottom: 2rem;
+
+}
+
+
+.halls-section h2 {
+
+    margin-bottom: 1.5rem;
+
+    color: #333;
+
+    border-bottom: 3px solid #667eea;
+
+    padding-bottom: 0.5rem;
+
+}
+
+
+.halls-list {
+
+    display: grid;
+
+    gap: 1.5rem;
+
+}
+
+
+.hall-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 1.5rem;
+
+    background: #f8f9fa;
+
+    border-radius: 15px;
+
+    border-left: 5px solid #667eea;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.hall-item:hover {
+
+    background: #e9ecef;
+
+    transform: translateX(5px);
+
+}
+
+
+.hall-info h4 {
+
+    color: #333;
+
+    margin-bottom: 0.5rem;
+
+    font-size: 1.2rem;
+
+}
+
+
+.hall-location,
+
+.hall-capacity {
+
+    color: #666;
+
+    margin: 0.3rem 0;
+
+}
+
+
+.status {
+
+    padding: 0.3rem 1rem;
+
+    border-radius: 20px;
+
+    font-size: 0.9rem;
+
+    font-weight: bold;
+
+}
+
+
+.status.available {
+
+    background: #d4edda;
+
+    color: #155724;
+
+}
+
+
+.status.occupied {
+
+    background: #f8d7da;
+
+    color: #721c24;
+
+}
+
+
+.hall-actions {
+
+    display: flex;
+
+    gap: 0.5rem;
+
+}
+
+
+.btn-icon {
+
+    background: none;
+
+    border: none;
+
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    padding: 0.5rem;
+
+    border-radius: 50%;
+
+    transition: background 0.3s ease;
+
+}
+
+
+.btn-icon:hover {
+
+    background: rgba(102, 126, 234, 0.1);
+
+}
+
+
+.no-halls {
+
+    text-align: center;
+
+    color: #666;
+
+    font-style: italic;
+
+    padding: 2rem;
+
+}
+
+
+/* Form Container */
+
+.form-container {
+
+    max-width: 800px;
+
+    margin: 2rem auto;
+
+    padding: 2rem;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+}
+
+
+.form-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 2rem;
+
+    border-bottom: 2px solid #f0f0f0;
+
+    padding-bottom: 1rem;
+
+}
+
+
+.form-header h2 {
+
+    color: #333;
+
+    font-size: 2rem;
+
+}
+
+
+.hall-form {
+
+    display: grid;
+
+    gap: 1.5rem;
+
+}
+
+
+/* Hall Cards for Selection */
+
+.hall-card {
+
+    background: white;
+
+    border: 2px solid #e9ecef;
+
+    border-radius: 15px;
+
+    padding: 1.5rem;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    margin-bottom: 1rem;
+
+}
+
+
+.hall-card:hover {
+
+    border-color: #667eea;
+
+    background: #f8f9ff;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+
+}
+
+
+.hall-card h4 {
+
+    color: #333;
+
+    margin-bottom: 1rem;
+
+    font-size: 1.3rem;
+
+}
+
+
+.hall-card p {
+
+    color: #666;
+
+    margin: 0.5rem 0;
+
+}
+
+
+/* Guest List */
+
+.guest-list {
+
+    margin-top: 2rem;
+
+    max-height: 400px;
+
+    overflow-y: auto;
+
+}
+
+
+.guest-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 1rem;
+
+    background: #f8f9fa;
+
+    border-radius: 10px;
+
+    margin-bottom: 1rem;
+
+    border-left: 4px solid #667eea;
+
+}
+
+
+.guest-item p {
+
+    margin: 0;
+
+    font-weight: bold;
+
+    color: #333;
+
+}
+
+
+/* Scanner Page */
+
+.scanner-container {
+
+    max-width: 600px;
+
+    margin: 2rem auto;
+
+    padding: 2rem;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+
+}
+
+
+.scanner-container h2 {
+
+    margin-bottom: 2rem;
+
+    color: #333;
+
+    font-size: 2rem;
+
+}
+
+
+.guest-details {
+
+    margin-top: 2rem;
+
+    padding: 1.5rem;
+
+    background: #f8f9fa;
+
+    border-radius: 15px;
+
+    border-left: 5px solid #28a745;
+
+}
+
+
+.guest-details p {
+
+    margin: 0.5rem 0;
+
+    font-size: 1.1rem;
+
+    font-weight: bold;
+
+    color: #333;
+
+}
+
+
+.file-input-section {
+
+    margin-top: 2rem;
+
+}
+
+
+/* Quick Actions */
+
+.quick-actions {
+
+    text-align: center;
+
+    margin-top: 2rem;
+
+}
+
+
+/* Progress Steps */
+
+.progress-steps {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 3rem;
+
+}
+
+
+.step {
+
+    padding: 1rem 2rem;
+
+    background: #e9ecef;
+
+    color: #666;
+
+    border-radius: 25px;
+
+    margin: 0 0.5rem;
+
+    font-weight: bold;
+
+}
+
+
+.step.active {
+
+    background: #667eea;
+
+    color: white;
+
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+
+    .welcome-title {
+
+        font-size: 2.5rem;
+
+    }
+
+
+
+    .button-container {
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+
+
+    .dashboard-header {
+
+        flex-direction: column;
+
+        gap: 1rem;
+
+        text-align: center;
+
+    }
+
+
+
+    .action-cards {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+
+    .hall-item {
+
+        flex-direction: column;
+
+        gap: 1rem;
+
+        text-align: center;
+
+    }
+
+
+
+    .auth-form {
+
+        padding: 2rem;
+
+    }
+
+
+
+    .form-header {
+
+        flex-direction: column;
+
+        gap: 1rem;
+
+        text-align: center;
+
+    }
+
+
+
+    .guest-item {
+
+        flex-direction: column;
+
+        gap: 1rem;
+
+        text-align: center;
+
+    }
+
+}
+
+
+/* Animation Effects */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+.auth-form,
+.card,
+.hall-item,
+.guest-item {
+
+    animation: fadeIn 0.5s ease-out;
+
+}
+
+
+/* Loading States */
+
+.loading {
+
+    opacity: 0.6;
+
+    pointer-events: none;
+
+}
+
+
+/* Success/Error Messages */
+
+.success-message {
+
+    background: #d4edda;
+
+    color: #155724;
+
+    padding: 1rem;
+
+    border-radius: 10px;
+
+    margin: 1rem 0;
+
+    text-align: center;
+
+    border: 1px solid #c3e6cb;
+
+}
+
+
+/* Utility Classes */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+/* Additional styles for Step 3 */
+.event-info {
+    background: #f8f9ff;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    border-left: 5px solid #667eea;
+}
+
+.event-info h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.event-info p {
+    color: #666;
+    margin: 0;
+}
+
+.capacity-status {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.capacity-status p {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.guest-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.guest-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.guest-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.guest-info p {
+    margin: 0;
+    color: #666;
+    font-weight: bold;
+}
+
+.guest-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.no-guests {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 2px dashed #ddd;
+}
+
+.complete-section {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #f8fff8;
+    border-radius: 15px;
+    border: 2px solid #28a745;
+}
+
+.complete-section .btn {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
+.complete-section .btn:hover {
+    background: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .guest-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .guest-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* csvbjhf */
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.form-actions .btn {
+    min-width: 150px;
+}
+
+/* Bottom Navigation */
+.bottom-navigation {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Outline Button Style */
+.btn-outline {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-outline:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive adjustments for form actions */
+@media (max-width: 768px) {
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* two column */
+
+.page-header h1 {
+    font-size: 2rem;
+}
+
+.left-column,
+.right-column {
+    padding: 1.5rem;
+}
+
+.halls-list-column .hall-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.halls-list-column .hall-actions {
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.left-column .form-actions {
+    flex-direction: column;
+}
+
+.left-column .form-actions .btn {
+    max-width: none;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - Step 2 - Eventify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Select a Hall for Your Event - Step 2</h2>
+        <div id="hallsList" class="halls-list">
+            <!-- Halls will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Load event data and available halls on page load
+        window.onload = function() {
+            const eventData = JSON.parse(localStorage.getItem('eventData'));
+            const allHalls = JSON.parse(localStorage.getItem('eventHalls') || '[]');
+            const filteredHalls = allHalls.filter(hall => 
+                hall.capacity >= eventData.numInvited && hall.status === "Available"
+            );
+
+            const hallsList = document.getElementById('hallsList');
+            if (filteredHalls.length === 0) {
+                hallsList.innerHTML = '<p>No available halls for the selected capacity.</p>';
+                return;
+            }
+
+            // Generate HTML for each available hall
+            hallsList.innerHTML = filteredHalls.map((hall, index) => `
+                <div class="hall-card" onclick="selectHall(${index})">
+                    <h4>${hall.name}</h4>
+                    <p>📍 ${hall.location}</p>
+                    <p>👥 Capacity: ${hall.capacity}</p>
+                </div>
+            `).join('');
+        };
+
+        // Function to select a hall and proceed to step 3
+        function selectHall(index) {
+            const allHalls = JSON.parse(localStorage.getItem('eventHalls') || '[]');
+            const selectedHall = allHalls.filter(hall => hall.status === "Available")[index];
+
+            // Update hall status to "Occupied"
+            selectedHall.status = "Occupied";
+            localStorage.setItem('eventHalls', JSON.stringify(allHalls));
+
+            // Save selected hall data to localStorage
+            localStorage.setItem('selectedHall', JSON.stringify(selectedHall));
+
+            // Redirect to step 3
+            window.location.href = 'create-event-step3.html';
+        }
+    </script>
+</body>
+</html>

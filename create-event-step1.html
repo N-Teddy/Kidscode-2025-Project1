@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - Step 1 - Eventify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Your Event - Step 1</h2>
+        <form id="eventStep1Form">
+            <div class="form-group">
+                <label for="eventName">Event Name:</label>
+                <input type="text" id="eventName" name="eventName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="numInvited">Number of People Invited:</label>
+                <input type="number" id="numInvited" name="numInvited" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="seatsPerTable">Number of Seats Per Table:</label>
+                <input type="number" id="seatsPerTable" name="seatsPerTable" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="eventType">Event Type:</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Birthday Party">Birthday Party</option>
+                    <option value="Conference">Conference</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle form submission for event creation step 1
+        document.getElementById('eventStep1Form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get form values
+            const eventName = document.getElementById('eventName').value;
+            const numInvited = document.getElementById('numInvited').value;
+            const seatsPerTable = document.getElementById('seatsPerTable').value;
+            const eventType = document.getElementById('eventType').value;
+            
+            // Create event object
+            const eventData = {
+                eventName: eventName,
+                numInvited: numInvited,
+                seatsPerTable: seatsPerTable,
+                eventType: eventType
+            };
+            
+            // Save event data to localStorage
+            localStorage.setItem('eventData', JSON.stringify(eventData));
+            
+            // Redirect to step 2
+            window.location.href = 'create-event-step2.html';
+        });
+    </script>
+</body>
+</html>

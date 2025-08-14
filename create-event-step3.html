@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - Step 3 - Eventify</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Add Guests to Your Event - Step 3</h2>
+        <form id="guestForm">
+            <div class="form-group">
+                <label for="guestName">Guest Name:</label>
+                <input type="text" id="guestName" name="guestName" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Guest</button>
+        </form>
+        <div id="guestList" class="guest-list">
+            <!-- Guests will be dynamically added here -->
+        </div>
+        <p id="capacityWarning" class="warning-message"></p>
+    </div>
+
+    <script>
+            const { jsPDF } = window.jspdf;
+
+        let guests = [];
+        const eventData = JSON.parse(localStorage.getItem('eventData'));
+        const maxGuests = eventData.numInvited;
+
+        // Load existing guests from localStorage if any
+        window.onload = function () {
+            const existingGuests = JSON.parse(localStorage.getItem('guests') || '[]');
+            guests = existingGuests;
+            updateGuestList();
+        };
+
+        // Handle guest form submission
+        document.getElementById('guestForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            if (guests.length >= maxGuests) {
+                document.getElementById('capacityWarning').textContent = "Capacity limit reached!";
+                return;
+            }
+
+            const guestName = document.getElementById('guestName').value;
+            const tableNumber = Math.floor(guests.length / eventData.seatsPerTable) + 1;
+            const seatNumber = (guests.length % eventData.seatsPerTable) + 1;
+
+            // Create guest object
+            const guest = {
+                name: guestName,
+                table: tableNumber,
+                seat: seatNumber,
+                qrCode: btoa(guestName) // Encrypt guest name for QR code
+            };
+
+            guests.push(guest);
+            localStorage.setItem('guests', JSON.stringify(guests));
+            updateGuestList();
+            document.getElementById('guestName').value = ''; // Clear input
+        });
+
+        // Function to update guest list display
+        function updateGuestList() {
+            const guestList = document.getElementById('guestList');
+            guestList.innerHTML = guests.map(guest => `
+                <div class="guest-item">
+                    <p>${guest.name} - Table: ${guest.table}, Seat: ${guest.seat}</p>
+                    <button onclick="downloadTicket('${guest.qrCode}', '${guest.name}', ${guest.table}, ${guest.seat})" class="btn btn-secondary">Download Ticket</button>
+                </div>
+            `).join('');
+        }
+
+        // Access jsPDF via the UMD namespace
+
+
+                function downloadTicket(qrCodeText, guestName, table, seat) {
+                    // Generate QR code image
+                    const qr = new QRious({
+                        value: qrCodeText,
+                        size: 100
+                    });
+
+                    const doc = new jsPDF();
+                    doc.text(`Event Name: ${eventData.eventName}`, 10, 10);
+                    doc.text(`Guest Name: ${guestName}`, 10, 20);
+                    doc.text(`Table: ${table}`, 10, 30);
+                    doc.text(`Seat: ${seat}`, 10, 40);
+
+                    doc.addImage(qr.toDataURL(), 'PNG', 10, 50, 50, 50);
+                    doc.save(`${guestName}_ticket.pdf`);
+                }
+
+    </script>
+</body>
+
+</html>
